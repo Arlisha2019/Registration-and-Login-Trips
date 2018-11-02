@@ -6,6 +6,7 @@
   </head>
   <body>
     <a href="/login"> Login Page </a>
+    <a href="/logout"> Sign Out </a>
     <h3> Welcome {{username}}, please add your trips below! </h3>
 
     <h2 id="heading"> Add Your Trips Here </h2>
@@ -39,14 +40,14 @@
             <strong>Trip End Date: </strong> <label> {{endDate}} </label>
             </br>
           </li>
-              <form action="/delete-trips" method="POST">
-              <img type="hidden" name="tripImage" value="{{image}}" />
+              <form action="/delete-a-trip" method="POST">
+              <img type="hidden" name="tripImage" value={{image}}/>
 
-              <input type="hidden" name="tripTitle" value="{{title}}" />
+              <input type="hidden" name="tripTitle" value={{title}} />
 
-              <input type="hidden" name="departureDate" value="{{beginDate}}" />
+              <input type="hidden" name="departureDate" value={{beginDate}} />
 
-              <input type="hidden" name="returnDate" value="{{endDate}}" />
+              <input type="hidden" name="returnDate" value={{endDate}} />
 
               <input type="submit" value="Remove"/>
             </form>

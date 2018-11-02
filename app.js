@@ -10,7 +10,7 @@ let usersList = []
 let trips = []
 
 app.use(session({
-  secret: '123$$ABC$123',
+  secret: '12ABC123',
   resave: false,
   saveUninitialized: false
 }))
@@ -24,6 +24,7 @@ app.engine('mustache',mustacheExpress())
 app.set('views','./login')
 
 app.set('view engine', 'mustache')
+
 
 app.get('/login', function(req, res) {
   res.render('login')
@@ -43,7 +44,8 @@ app.post('/register', function(req, res) {
    let passwordR = req.body.passwordR
 
    usersList.push({ userName: userNameR, password: passwordR})
-   res.redirect('/add-trips')
+   req.session.userName = userNameR
+  res.redirect('/add-trips')
  })
 
  app.post('/login', function(req, res) {
@@ -81,24 +83,27 @@ app.post('/register', function(req, res) {
 
  })
 
-app.post('/delete-trips', function(req, res) {
+app.post('/delete-a-trip', function(req, res) {
 
   let title = req.body.tripTitle
 
+    console.log(title);
+
   trips = trips.filter(function(trip) {
-    return trip.tripTitle != title
+    return trip.title != title
   })
-  console.log(trips);
+
   res.render('delete-trips', {title: title})
 })
-   //let user = usersList.find(function(user) {
-     //return user.userNameR == userNameR && user.passwordR == passwordR
 
 
+app.get('/logout', function(req, res){
 
 
-//for user name to post on web page
-//{ usersList: usersList, username : usersList[0 ].userNameR}
+  req.session.destroy()
+
+  res.redirect('login')
+});
 
 
 
