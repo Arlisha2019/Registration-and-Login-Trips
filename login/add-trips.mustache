@@ -8,5 +8,52 @@
     <a href="/login"> Login Page </a>
     <h3> Welcome {{username}}, please add your trips below! </h3>
 
+    <h2 id="heading"> Add Your Trips Here </h2>
+      <div id="addtripsContainer">
+        <form action="/add-trips" method="POST">
+          <input type="text" name ="tripTitle" placeholder="Enter Destination"/>
+
+          <input type="text" name="tripImage" placeholder="Enter Image URL"/>
+
+          <input type="date" name="departureDate" placeholder="Enter Departure Date" />
+
+          <input type="date" name="returnDate" placeholder="Enter Return Date"/>
+
+          <input type="submit"/>
+      </form>
+    </div>
+
+    <div id="tripsContainer">
+
+        <ul id="tripList">
+
+          {{#trips}}
+
+          <li>
+            <img id="tripImg" src="{{image}}"> </img>
+            </br>
+            <strong>Destination: </strong> <label> {{title}} </label>
+            </br>
+            <strong>Trip Start Date: </strong> <label> {{beginDate}} </label>
+            </br>
+            <strong>Trip End Date: </strong> <label> {{endDate}} </label>
+            </br>
+          </li>
+              <form action="/delete-trips" method="POST">
+              <img type="hidden" name="tripImage" value="{{image}}" />
+
+              <input type="hidden" name="tripTitle" value="{{title}}" />
+
+              <input type="hidden" name="departureDate" value="{{beginDate}}" />
+
+              <input type="hidden" name="returnDate" value="{{endDate}}" />
+
+              <input type="submit" value="Remove"/>
+            </form>
+          {{/trips}}
+        </ul>
+      </div>
+
+
   </body>
 </html>

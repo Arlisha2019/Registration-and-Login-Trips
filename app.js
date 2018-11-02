@@ -7,6 +7,7 @@ var session = require('express-session')
 
 let usersList = []
 
+let trips = []
 
 app.use(session({
   secret: '123$$ABC$123',
@@ -33,7 +34,7 @@ app.get('/register', function(reg, res) {
 })
 
 app.get('/add-trips', function(req, res) {
-  res.render('add-trips')
+  res.render('add-trips', { trips: trips })
 })
 
 app.post('/register', function(req, res) {
@@ -62,12 +63,34 @@ app.post('/register', function(req, res) {
        res.redirect('/add-trips')
      }
    } else {
-     let wrong = "Incorrect login"
-     res.redirect('/login', {wrong:wrong})
+     res.redirect('/login')
    }
 
  })
 
+ app.post('/add-trips', function(req, res) {
+
+  let title = req.body.tripTitle
+  let image = req.body.tripImage
+  let beginDate = req.body.departureDate
+  let endDate = req.body.returnDate
+
+  trips.push({title : title, image : image, beginDate : beginDate, endDate : endDate })
+
+  res.redirect('/add-trips')
+
+ })
+
+app.post('/delete-trips', function(req, res) {
+
+  let title = req.body.tripTitle
+
+  trips = trips.filter(function(trip) {
+    return trip.tripTitle != title
+  })
+  console.log(trips);
+  res.render('delete-trips', {title: title})
+})
    //let user = usersList.find(function(user) {
      //return user.userNameR == userNameR && user.passwordR == passwordR
 
